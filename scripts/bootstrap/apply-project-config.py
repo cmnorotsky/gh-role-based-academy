@@ -127,7 +127,8 @@ def get_projects(owner):
 def get_field_names(owner, project_number):
     raw = run(["gh", "project", "field-list", str(project_number), "--owner", owner, "--format", "json", "--limit", "200"])
     data = json.loads(raw)
-    return {f.get("name") for f in data}
+    fields = data.get("fields", [])
+    return {f.get("name") for f in fields}
 
 
 def create_field(owner, project_number, field):
