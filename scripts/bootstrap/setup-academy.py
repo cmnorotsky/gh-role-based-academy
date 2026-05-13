@@ -199,14 +199,14 @@ def add_issues_to_projects(owner, roles):
         project_number = get_project_number(owner, title)
         if project_number is None:
             continue
-        raw = run([
+        role_issues = run([
             "gh",
             "issue",
             "list",
             "--repo",
             f"{owner}/gh-role-based-academy",
             "--label",
-            f"role:{role},role:all",
+            f"role:{role}",
             "--state",
             "all",
             "--limit",
@@ -214,8 +214,24 @@ def add_issues_to_projects(owner, roles):
             "--json",
             "url",
         ])
-        issues = json.loads(raw)
-        for item in issues:
+        all_role_issues = run([
+            "gh",
+            "issue",
+            "list",
+            "--repo",
+            f"{owner}/gh-role-based-academy",
+            "--label",
+            "role:all",
+            "--state",
+            "all",
+            "--limit",
+            "500",
+            "--json",
+            "url",
+        ])
+        issues = json.loads(role_issues) + json.loads(all_role_issues)
+        urls = {item["url"] for item in issues}
+        for url in urls:
             run([
                 "gh",
                 "project",
@@ -224,7 +240,7 @@ def add_issues_to_projects(owner, roles):
                 "--owner",
                 owner,
                 "--url",
-                item["url"],
+                url,
             ], check=False)
 
 
