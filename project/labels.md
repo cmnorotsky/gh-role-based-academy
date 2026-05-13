@@ -22,6 +22,7 @@ Roles
 - role:manager
 - role:ai-coach
 - role:all
+- role:release-manager
 
 Certifications
 - cert:foundations
