@@ -118,10 +118,13 @@ FIELDS = [
 ]
 
 
-def get_projects(owner):
+def get_projects(owner, project_title=None):
     raw = run(["gh", "project", "list", "--owner", owner, "--format", "json", "--limit", "200"])
     data = json.loads(raw)
-    return [p for p in data.get("projects", []) if p.get("title", "").startswith("Academy - role:")]
+    projects = data.get("projects", [])
+    if project_title:
+        return [p for p in projects if p.get("title") == project_title]
+    return [p for p in projects if p.get("title", "").startswith("Academy - role:")]
 
 
 def get_field_names(owner, project_number):
@@ -152,9 +155,10 @@ def create_field(owner, project_number, field):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--owner", required=True)
+    parser.add_argument("--project-title")
     args = parser.parse_args()
 
-    projects = get_projects(args.owner)
+    projects = get_projects(args.owner, args.project_title)
     for project in projects:
         number = project.get("number")
         existing = get_field_names(args.owner, number)
