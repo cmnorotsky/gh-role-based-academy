@@ -21,6 +21,7 @@ Roles
 - role:architect
 - role:manager
 - role:ai-coach
+- role:all
 
 Certifications
 - cert:foundations
