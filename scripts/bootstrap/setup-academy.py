@@ -130,6 +130,8 @@ def create_issues(owner, repo):
             if issue["title"] in seen:
                 continue
             seen.add(issue["title"])
+            if issue_exists(owner, repo, issue["title"]):
+                continue
             labels = labels_from_body(issue["body"])
             cmd = [
                 "gh",
@@ -167,11 +169,30 @@ def create_role_projects(owner, visibility, roles):
 
 def get_project_number(owner, title):
     raw = run(["gh", "project", "list", "--owner", owner, "--format", "json"])
-    projects = json.loads(raw)
+    data = json.loads(raw)
+    projects = data.get("projects", [])
     for project in projects:
         if project.get("title") == title:
             return project.get("number")
     return None
+
+
+def issue_exists(owner, repo, title):
+    raw = run([
+        "gh",
+        "issue",
+        "list",
+        "--repo",
+        f"{owner}/{repo}",
+        "--search",
+        f'"{title}" in:title',
+        "--json",
+        "title",
+        "--limit",
+        "50",
+    ])
+    items = json.loads(raw)
+    return any(item.get("title") == title for item in items)
 
 
 def add_issues_to_projects(owner, roles):
