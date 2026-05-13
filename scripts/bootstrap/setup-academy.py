@@ -151,7 +151,7 @@ def create_issues(owner, repo):
             run(cmd)
 
 
-def create_role_projects(owner, visibility, roles):
+def create_role_projects(owner, roles):
     for role in roles:
         title = f"Academy - role:{role}"
         run([
@@ -162,8 +162,6 @@ def create_role_projects(owner, visibility, roles):
             owner,
             "--title",
             title,
-            "--visibility",
-            visibility,
         ], check=False)
 
 
@@ -243,7 +241,7 @@ def main():
     create_labels(args.owner, args.repo)
     create_milestones(args.owner, args.repo)
     create_issues(args.owner, args.repo)
-    create_role_projects(args.owner, args.visibility, roles)
+    create_role_projects(args.owner, roles)
     add_issues_to_projects(args.owner, roles)
 
 
