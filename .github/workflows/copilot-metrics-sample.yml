@@ -1,0 +1,17 @@
+name: Copilot Metrics Sample
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 4 * * 1"
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    env:
+      COPILOT_METRICS_SOURCE: TODO
+      COPILOT_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python scripts/metrics/copilot-usage-sample.py --dry-run

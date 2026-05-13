@@ -1,0 +1,13 @@
+name: Reusable Build
+on:
+  workflow_call:
+    inputs:
+      build_command:
+        required: true
+        type: string
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ${{ inputs.build_command }}

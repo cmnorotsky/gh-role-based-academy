@@ -1,0 +1,71 @@
+name: Capstone Task
+ description: Track a capstone task
+ title: "[Capstone] "
+ labels: ["type:capstone", "track:capstone"]
+ body:
+   - type: input
+     id: role
+     attributes:
+       label: Role
+     validations:
+       required: true
+   - type: input
+     id: module
+     attributes:
+       label: Module
+     validations:
+       required: true
+   - type: input
+     id: objective
+     attributes:
+       label: Learning objective
+     validations:
+       required: true
+   - type: textarea
+     id: prerequisites
+     attributes:
+       label: Prerequisites
+     validations:
+       required: true
+   - type: textarea
+     id: steps
+     attributes:
+       label: Steps
+     validations:
+       required: true
+   - type: textarea
+     id: evidence
+     attributes:
+       label: Evidence required
+     validations:
+       required: true
+   - type: textarea
+     id: dod
+     attributes:
+       label: Definition of done
+     validations:
+       required: true
+   - type: input
+     id: reviewer
+     attributes:
+       label: Reviewer
+     validations:
+       required: true
+   - type: input
+     id: certification
+     attributes:
+       label: Related certification
+     validations:
+       required: false
+   - type: input
+     id: effort
+     attributes:
+       label: Estimated effort
+     validations:
+       required: true
+   - type: textarea
+     id: risks
+     attributes:
+       label: Risk or notes
+     validations:
+       required: false

@@ -1,0 +1,2 @@
+repo,alert_type,severity,status,opened_date,closed_date,owner
+TODO,codeql,high,open,YYYY-MM-DD,,TODO
